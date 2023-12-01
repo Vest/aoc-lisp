@@ -10,7 +10,9 @@
          (fileStream (open fileName)))
     (loop
       for line = (read-line fileStream nil)
-          while line do (format t "~a~%" line))
+          while line
+      do (let ((num (get-number line)))
+           (print num)))
     (close fileStream)))
 
 (defun get-left-number (str)
