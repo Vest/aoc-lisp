@@ -8,5 +8,6 @@
 (defun show-input (day)
   (let* ((fileName (format nil "input~2,'0d.txt" day))
          (fileStream (open fileName)))
-    (format t "~a~%" (read-line fileStream))
+    (loop for line = (read-line fileStream nil)
+          while line do (format t "~a~%" line))
     (close fileStream)))
