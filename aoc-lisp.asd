@@ -9,3 +9,13 @@
   :depends-on ("dexador")
   :components ((:file "package")
                (:file "aoc-lisp")))
+
+(asdf:defsystem #:aoc-lisp/test
+  :description "Test for aoc-lisp, or at least an attempt to have it"
+  :author "Vest <Vest@users.noreply.github.com>"
+  :license "MIT"
+  :depends-on (:aoc-lisp :fiveam)
+  :components ((:file "aoc-lisp-test"))
+  :perform (test-op (o c)
+                     (symbol-call :fiveam :run!
+                                  (find-symbol* :aoc-lisp :aoc-lisp/test))))
