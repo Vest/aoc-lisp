@@ -6,7 +6,7 @@
   :license  "MIT"
   :version "0.0.1"
   :serial t
-  :depends-on ("dexador")
+  :depends-on ("dexador" "cl-ppcre")
   :components ((:file "package")
                (:file "aoc-lisp")))
 
