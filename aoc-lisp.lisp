@@ -6,14 +6,18 @@
   (print "test Vest"))
 
 (defun show-input (day)
-  (let* ((fileName (format nil "input~2,'0d.txt" day))
-         (fileStream (open fileName)))
-    (loop
-      for line = (read-line fileStream nil)
-          while line
-      do (let ((num (get-number line)))
-           (print num)))
-    (close fileStream)))
+  (let ((sum 0))
+    (let* ((fileName (format nil "input~2,'0d.txt" day))
+           (fileStream (open fileName)))
+      (loop
+        for line = (read-line fileStream nil)
+        while line
+        do (let ((num (get-number line)))
+             (setq sum (+ sum num))))
+      (close fileStream))
+    (print sum)
+    )
+  )
 
 (defun get-left-number (str)
   (loop
