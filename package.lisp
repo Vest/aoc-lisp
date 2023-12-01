@@ -1,4 +1,5 @@
 ;;;; package.lisp
 
 (defpackage #:aoc-lisp
-  (:use #:cl))
+  (:use #:cl)
+  (:export :aoc-lisp))
