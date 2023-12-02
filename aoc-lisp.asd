@@ -8,14 +8,16 @@
   :serial t
   :depends-on ("dexador" "cl-ppcre")
   :components ((:file "package")
-               (:file "aoc-lisp")))
+               (:file "aoc-lisp")
+               (:file "aoc-lisp-02")))
 
 (asdf:defsystem #:aoc-lisp/test
   :description "Test for aoc-lisp, or at least an attempt to have it"
   :author "Vest <Vest@users.noreply.github.com>"
   :license "MIT"
   :depends-on (:aoc-lisp :fiveam)
-  :components ((:file "aoc-lisp-test"))
+  :components ((:file "aoc-lisp-test")
+               (:file "aoc-lisp-02-test"))
   :perform (test-op (o c)
                      (symbol-call :fiveam :run!
                                   (find-symbol* :aoc-lisp :aoc-lisp/test))))

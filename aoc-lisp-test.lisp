@@ -45,3 +45,22 @@
 (test get-better-number-test
   (is (= 29 (aoc-lisp::get-better-number "two1nine")))
   (is (= 76 (aoc-lisp::get-better-number "7pqrstsixteen"))))
+
+(test split-line-test
+  (is (equal '("3 blue" "4 red" "1 red" "2 green" "6 blue" "2 green")
+             (aoc-lisp::split-line-02 "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"))))
+
+(test split-game-test
+  (is (= 2 (aoc-lisp::split-game-02 "Game 2: 3 blue"))))
+
+(test split-token-test
+  (is (equal '(3 "blue")
+             (aoc-lisp::split-token-02 "3 blue"))))
+
+(test is-enough-test
+   (is (aoc-lisp::is-enough '(3 "red")))
+   (is (not (aoc-lisp::is-enough '(20 "red")))))
+
+(test is-game-valid-test
+  (is (= 1 (aoc-lisp::is-game-valid "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green")))
+  (is (= 0 (aoc-lisp::is-game-valid "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red"))))
