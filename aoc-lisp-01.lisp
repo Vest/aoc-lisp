@@ -1,10 +1,16 @@
-;;;; aoc-lisp.lisp
+(defpackage :aoc-lisp/day01
+  (:use :cl))
 
-(in-package #:aoc-lisp)
+(in-package :aoc-lisp/day01)
 
-(defun show-input-01 (day)
+(defun show-answers()
+  (let ((part-a (show-part-a))
+        (part-b (show-part-b)))
+    (print (format t "Day01: ~a, ~a~%" part-a part-b))))
+
+(defun show-part-a ()
   (let ((sum 0))
-    (let* ((fileName (format nil "input~2,'0d.txt" day))
+    (let* ((fileName "input01.txt")
            (fileStream (open fileName)))
       (loop
         for line = (read-line fileStream nil)
@@ -12,14 +18,11 @@
         do (let ((num (get-number line)))
              (setq sum (+ sum num))))
       (close fileStream))
-    (print sum)
-    )
-  )
+    sum))
 
-
-(defun show-input-02 (day)
+(defun show-part-b ()
   (let ((sum 0))
-    (let* ((fileName (format nil "input~2,'0d.txt" day))
+    (let* ((fileName "input01.txt")
            (fileStream (open fileName)))
       (loop
         for line = (read-line fileStream nil)
@@ -27,9 +30,7 @@
         do (let ((num (get-better-number line)))
              (setq sum (+ sum num))))
       (close fileStream))
-    (print sum)
-    )
-  )
+    sum))
 
 (defun get-left-number (str)
   (loop
@@ -78,8 +79,3 @@
         ((string= str "8") '8)
         ((string= str "9") '9)
         ))
-
-(defun show-answers (day)
-  (cond ((= day 01) (aoc-lisp/day01::show-answers))
-        ((= day 02) (aoc-lisp/day02::show-answers))
-  ))

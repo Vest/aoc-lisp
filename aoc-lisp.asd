@@ -9,6 +9,7 @@
   :depends-on ("dexador" "cl-ppcre")
   :components ((:file "package")
                (:file "aoc-lisp")
+               (:file "aoc-lisp-01")
                (:file "aoc-lisp-02")))
 
 (asdf:defsystem #:aoc-lisp/test
@@ -16,7 +17,7 @@
   :author "Vest <Vest@users.noreply.github.com>"
   :license "MIT"
   :depends-on (:aoc-lisp :fiveam)
-  :components ((:file "aoc-lisp-test")
+  :components ((:file "aoc-lisp-01-test")
                (:file "aoc-lisp-02-test"))
   :perform (test-op (o c)
                      (symbol-call :fiveam :run!

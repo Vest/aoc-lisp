@@ -1,13 +1,13 @@
 ;;;; aoc-lisp.lisp
 
-(in-package #:aoc-lisp)
+(defpackage :aoc-lisp/day02
+  (:use :cl))
 
-(defun hello-02()
-  (print "test Vest"))
+(in-package :aoc-lisp/day02)
 
-(defun show-input-02 (day)
+(defun show-part-a ()
   (let ((sum 0))
-    (let* ((fileName (format nil "input~2,'0d.txt" day))
+    (let* ((fileName "input02.txt")
            (fileStream (open fileName)))
       (loop
         for line = (read-line fileStream nil)
@@ -15,19 +15,30 @@
         do (let ((game (is-game-valid line)))
              (setq sum (+ sum game))))
       (close fileStream))
-    (print sum)
-    )
-  )
+    sum))
 
-(defun split-line-02 (str)
+(defun show-part-b ()
+  (let ((sum 0))
+    (let* ((fileName "input02.txt")
+           (fileStream (open fileName)))
+      (loop
+        for line = (read-line fileStream nil)
+        while line
+        do (let ((game (is-game-valid line)))
+             (setq sum (+ sum game))))
+      (close fileStream))
+    sum))
+
+
+(defun split-line (str)
   (cdr (ppcre:split "((: )|(, )|(; ))" str)))
 
 
-(defun split-game-02 (str)
+(defun split-game (str)
   (parse-integer (second (ppcre:split "(( )|(: ))" str))))
 
 
-(defun split-token-02 (str)
+(defun split-token (str)
   (let* ((result (ppcre:split " " str))
          (amount (parse-integer (first result)))
          (color (second result)))
@@ -41,8 +52,8 @@
           ((and (<= a 14) (string= c "blue")) t))))
 
 (defun is-game-valid (game)
-  (let* ((game-number (split-game-02 game))
-         (dices-str (split-line-02 game))
-         (dices (mapcar #'(lambda (x) (split-token-02 x)) dices-str))
+  (let* ((game-number (split-game game))
+         (dices-str (split-line game))
+         (dices (mapcar #'(lambda (x) (split-token x)) dices-str))
          (first-invalid (find-if-not #'is-enough dices)))
         (if first-invalid 0 game-number)))
