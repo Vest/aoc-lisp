@@ -9,7 +9,7 @@
 
 
 (def-suite aoc-day2
-  :description "Day 1 suite for AoC tests")
+  :description "Day 2 suite for AoC tests")
 
 (in-suite aoc-day2)
 
@@ -37,7 +37,8 @@
   (is (equalp (aoc-lisp/day02::make-dice :red 0 :green 2 :blue 0) (aoc-lisp/day02::map-dice '(2 "green"))))
   (is (equalp (aoc-lisp/day02::make-dice :red 0 :green 0 :blue 3) (aoc-lisp/day02::map-dice '(3 "blue")))))
 
-(test get-least-dice
-  (is (equalp (aoc-lisp/day02::make-dice :red 20 :green 13 :blue 6) (aoc-lisp/day02::get-least-dice "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red")))
+(test get-least-dice-test
+  (is (equalp (aoc-lisp/day02::make-dice :red 20 :green 13 :blue 6) (aoc-lisp/day02::get-least-dice "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red"))))
 
-  )
+(test calculate-dice-test
+  (is (= (* 20 13 6) (aoc-lisp/day02::calculate-dice (aoc-lisp/day02::make-dice :red 20 :green 13 :blue 6)))))
