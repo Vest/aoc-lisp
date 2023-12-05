@@ -1,7 +1,8 @@
-;;;; aoc-lisp.lisp
+;;;; aoc-lisp-02.lisp
 
 (defpackage :aoc-lisp/day02
-  (:use :cl))
+  (:use :cl)
+  (:export #:show-answers))
 
 (in-package :aoc-lisp/day02)
 

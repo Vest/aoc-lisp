@@ -1,5 +1,6 @@
 (defpackage :aoc-lisp/day01
-  (:use :cl))
+  (:use :cl)
+  (:export #:show-answers))
 
 (in-package :aoc-lisp/day01)
 

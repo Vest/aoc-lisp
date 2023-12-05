@@ -10,7 +10,9 @@
   :components ((:file "package")
                (:file "aoc-lisp")
                (:file "aoc-lisp-01")
-               (:file "aoc-lisp-02")))
+               (:file "aoc-lisp-02")
+               (:file "aoc-lisp-03")
+               ))
 
 (asdf:defsystem #:aoc-lisp/test
   :description "Test for aoc-lisp, or at least an attempt to have it"
@@ -18,7 +20,8 @@
   :license "MIT"
   :depends-on (:aoc-lisp :fiveam)
   :components ((:file "aoc-lisp-01-test")
-               (:file "aoc-lisp-02-test"))
+               (:file "aoc-lisp-02-test")
+               (:file "aoc-lisp-03-test"))
   :perform (test-op (o c)
                      (symbol-call :fiveam :run!
                                   (find-symbol* :aoc-lisp :aoc-lisp/test))))
