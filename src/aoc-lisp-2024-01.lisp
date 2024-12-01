@@ -16,8 +16,7 @@
   (let* ((fileName "input/1.txt")
          (fileStream (open fileName))
          (lc ())
-         (rc ())
-         (a 0))
+         (rc ()))
     (loop
         for line = (read-line fileStream nil)
         while line
@@ -30,8 +29,24 @@
       (close fileStream)
     (setq lc (sort lc #'(lambda (x y) (< x y))))
     (setq rc (sort rc #'(lambda (x y) (< x y))))
-    (setq a (apply '+ (mapcar #'(lambda (l r) (abs (- r l))) lc rc)))
-    (format t "~&This is my list: ~s~&" a)))
+    (apply '+ (mapcar #'(lambda (l r) (abs (- r l))) lc rc))))
 
 (defun show-part-b ()
-  "test-b")
+  (let* ((fileName "input/1.txt")
+         (fileStream (open fileName))
+         (lc ())
+         (rc ()))
+    (loop
+      for line = (read-line fileStream nil)
+      while line
+      do (let* ((w (s:words line))
+                (l (parse-integer (first w)))
+                (r (parse-integer (second w))))
+           (setq lc (append lc (list l)))
+           (setq rc (append rc (list r)))
+           ))
+      (close fileStream)
+    (reduce #'+
+            (mapcar
+             #'(lambda (x) (* x (length (remove-if-not #'(lambda (y) (= y x)) rc))))
+             lc))))
