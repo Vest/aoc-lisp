@@ -6,7 +6,7 @@
   :license  "MIT"
   :version "0.0.2"
   :serial t
-  :depends-on (:dexador :cl-ppcre :uiop :drakma :str)
+  :depends-on (:dexador :cl-ppcre :uiop :drakma :str :alexandria)
   :components ((:module "src"
                 :components
                ((:file "package" :depends-on ("downloader"))

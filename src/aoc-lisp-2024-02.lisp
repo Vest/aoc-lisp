@@ -68,10 +68,8 @@
          collect (remove-nth l i)))
 
 (defun remove-nth (l n)
-  (mapcar
-   #'first
-   (remove-if
-    #'(lambda (e)
+  (mapcar #'first
+   (remove-if #'(lambda (e)
         (= (second e) n))
     (mapcar #'(lambda (e p)
                 (list e p))

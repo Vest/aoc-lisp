@@ -25,7 +25,7 @@ If file exists, it will do nothing, if not it will download and create it."
 				 :direction :output
 				 :if-exists nil
 				 :if-does-not-exist :create)
-    (format text-to-write input-text)))
+    (format text-to-write "~a" input-text)))
 
 (declaim (ftype (function (string) string) get-input-from-remote))
 (defun get-input-from-remote (day)
