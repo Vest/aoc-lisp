@@ -15,7 +15,10 @@
                 (:file "aoc-lisp-01")
                 (:file "aoc-lisp-02")
                 (:file "aoc-lisp-03")
-                (:file "aoc-lisp-2024-01" :depends-on ("downloader")))))
+                (:file "aoc-lisp-2024-01" :depends-on ("downloader"))
+                (:file "aoc-lisp-2024-02" :depends-on ("downloader"))
+                (:file "aoc-lisp-2024-03" :depends-on ("downloader"))
+                (:file "aoc-lisp-2024-04" :depends-on ("downloader")))))
   :in-order-to ((test-op (test-op :aoc24-lisp/test))))
 
 (asdf:defsystem #:aoc-lisp/test
