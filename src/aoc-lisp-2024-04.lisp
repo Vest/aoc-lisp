@@ -31,15 +31,47 @@ S.S.S.S.SS
 ..M.M.M.MM
 .X.X.XMASX")
 
+(defparameter *small-test* "..X...
+.SAMX.
+.A..A.
+XMAS.S
+.X....")
+
+(defun show-answers()
+  (let ((part-a (show-part-a))
+        (part-b (show-part-b)))
+    (print (format t "Day04: ~a, ~a~%" part-a part-b))))
+
+(defun show-part-a ()
+  (let* ((fileName "input/4.txt")
+         (input (u:read-file-string fileName)))
+   (let* ((array (parse-string-to-array input)))
+      (find-xmas array))))
+
+(defun show-part-b ()
+  (let* ((fileName "input/4.txt")
+         (fileStream (open fileName))
+         (input ""))
+    (loop
+        for line = (read-line fileStream nil)
+        while line
+        do (setq input (s:concat input line)))
+      (close fileStream)
+    (let* ((array (parse-string-to-array input)))
+      (find-xmas array)
+      )))
+
+
 (defun parse-line-to-list (input)
   (coerce input 'list))
 
 (defun parse-string-to-array (input)
-  (let* ((lines (c:split #\Newline input))
-         (size (length (first lines)))
-         (array (make-array (list size size) :initial-element #\.)))
-    (loop for row from 0 below size
-          append (loop for col from 0 below size
+  (let* ((lines (s:lines input))
+         (width (length (first lines)))
+         (height (length lines))
+         (array (make-array (list height width) :initial-element #\.)))
+    (loop for row from 0 below height
+          append (loop for col from 0 below width
                        do (let* ((raw-line (nth row lines))
                                  (line (parse-line-to-list raw-line)))
                             (setf (aref array row col) (nth col line)))))
@@ -48,7 +80,7 @@ S.S.S.S.SS
 (defun get-safe (array row col)
   (handler-case
       (aref array row col)
-    (sb-int:invalid-array-index-error nil))
+    (sb-int:invalid-array-index-error nil)))
 
 (defun get-word-q (array row col)
   (list (get-safe array row col)
@@ -66,9 +98,9 @@ S.S.S.S.SS
 
 (defun get-word-e (array row col)
   (list (get-safe array row col)
-        (get-safe array (+ row 1) (- col 1))
-        (get-safe array (+ row 2) (- col 2))
-        (get-safe array (+ row 3) (- col 3))))
+        (get-safe array (- row 1) (+ col 1))
+        (get-safe array (- row 2) (+ col 2))
+        (get-safe array (- row 3) (+ col 3))))
 
 
 (defun get-word-d (array row col)
@@ -105,12 +137,18 @@ S.S.S.S.SS
         (get-safe array (- row 0) (- col 2))
         (get-safe array (- row 0) (- col 3))))
 
+(defun get-max (array row col)
+  (equalp (list))
+
+  )
+
 (defun find-xmas (array)
   (let* ((answer 0)
          (xmas (parse-line-to-list "XMAS"))
-         (size (array-dimension array 0)))
-    (loop for row from 0 below size
-          append (loop for col from 0 below size
+         (width (array-dimension array 1))
+         (height (array-dimension array 0)))
+    (loop for row from 0 below height
+          append (loop for col from 0 below width
                        do (let* ((words (list (get-word-q array row col)
                                               (get-word-w array row col)
                                               (get-word-e array row col)
@@ -121,5 +159,7 @@ S.S.S.S.SS
                                               (get-word-a array row col))))
                                 (incf answer
                                       (length
-                                       (remove-if-not #'(lambda (x) (equalp x xmas)) words))))))
-    answer))
+                                       (remove-if-not #'(lambda (x) (or (equalp x xmas)
+                                                                        (equalp x (reverse xmas))))
+                                                      words))))))
+    (/ answer 2)))
