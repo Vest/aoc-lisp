@@ -61,16 +61,9 @@ M.M.M.M.M.
 
 (defun show-part-b ()
   (let* ((fileName "input/4.txt")
-         (fileStream (open fileName))
-         (input ""))
-    (loop
-        for line = (read-line fileStream nil)
-        while line
-        do (setq input (s:concat input line)))
-      (close fileStream)
-    (let* ((array (parse-string-to-array input)))
-      (find-xmas array)
-    )))
+         (input (u:read-file-string fileName)))
+   (let* ((array (parse-string-to-array input)))
+      (find-mas array))))
 
 
 (defun parse-line-to-list (input)
@@ -142,14 +135,16 @@ M.M.M.M.M.
         (get-safe array (- row 0) (- col 3))))
 
 (defun get-mas (array row col)
-  (let ((letters (list (get-safe array (- row 1) (- col 1))
-                       (get-safe array (+ row 1) (- col 1))
-                       (get-safe array (+ row 1) (+ col 1))
-                       (get-safe array (- row 1) (+ col 1)))))
-    (if (equalp #\A (get-safe array row col))
-      (and (equalp (count #\M letters) 2)
-           (equalp (count #\S letters) 2))
-      nil)))
+  (let* ((tl (get-safe array (- row 1) (- col 1)))
+         (bl (get-safe array (+ row 1) (- col 1)))
+         (tr (get-safe array (- row 1) (+ col 1)))
+         (br (get-safe array (+ row 1) (+ col 1)))
+         (letters (list tl bl tr br)))
+    (and (equalp (count #\M letters) 2)
+         (equalp (count #\S letters) 2)
+         (not (equalp tl br))
+         (not (equalp bl tr))
+         (equalp #\A (get-safe array row col)))))
 
 (defun find-xmas (array)
   (let* ((answer 0)
