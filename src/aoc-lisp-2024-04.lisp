@@ -37,6 +37,17 @@ S.S.S.S.SS
 XMAS.S
 .X....")
 
+(defparameter *mas-test* ".M.S......
+..A..MSMS.
+.M.S.MAA..
+..A.ASMSM.
+.M.S.M....
+..........
+S.S.S.S.S.
+.A.A.A.A..
+M.M.M.M.M.
+..........")
+
 (defun show-answers()
   (let ((part-a (show-part-a))
         (part-b (show-part-b)))
@@ -59,7 +70,7 @@ XMAS.S
       (close fileStream)
     (let* ((array (parse-string-to-array input)))
       (find-xmas array)
-      )))
+    )))
 
 
 (defun parse-line-to-list (input)
@@ -88,13 +99,11 @@ XMAS.S
         (get-safe array (- row 2) (- col 2))
         (get-safe array (- row 3) (- col 3))))
 
-
 (defun get-word-w (array row col)
   (list (get-safe array row col)
         (get-safe array (- row 1) (- col 0))
         (get-safe array (- row 2) (- col 0))
         (get-safe array (- row 3) (- col 0))))
-
 
 (defun get-word-e (array row col)
   (list (get-safe array row col)
@@ -102,13 +111,11 @@ XMAS.S
         (get-safe array (- row 2) (+ col 2))
         (get-safe array (- row 3) (+ col 3))))
 
-
 (defun get-word-d (array row col)
   (list (get-safe array row col)
         (get-safe array (- row 0) (+ col 1))
         (get-safe array (- row 0) (+ col 2))
         (get-safe array (- row 0) (+ col 3))))
-
 
 (defun get-word-c (array row col)
   (list (get-safe array row col)
@@ -116,13 +123,11 @@ XMAS.S
         (get-safe array (+ row 2) (+ col 2))
         (get-safe array (+ row 3) (+ col 3))))
 
-
 (defun get-word-x (array row col)
   (list (get-safe array row col)
         (get-safe array (+ row 1) (- col 0))
         (get-safe array (+ row 2) (- col 0))
         (get-safe array (+ row 3) (- col 0))))
-
 
 (defun get-word-z (array row col)
   (list (get-safe array row col)
@@ -130,17 +135,21 @@ XMAS.S
         (get-safe array (+ row 2) (- col 2))
         (get-safe array (+ row 3) (- col 3))))
 
-
 (defun get-word-a (array row col)
   (list (get-safe array row col)
         (get-safe array (- row 0) (- col 1))
         (get-safe array (- row 0) (- col 2))
         (get-safe array (- row 0) (- col 3))))
 
-(defun get-max (array row col)
-  (equalp (list))
-
-  )
+(defun get-mas (array row col)
+  (let ((letters (list (get-safe array (- row 1) (- col 1))
+                       (get-safe array (+ row 1) (- col 1))
+                       (get-safe array (+ row 1) (+ col 1))
+                       (get-safe array (- row 1) (+ col 1)))))
+    (if (equalp #\A (get-safe array row col))
+      (and (equalp (count #\M letters) 2)
+           (equalp (count #\S letters) 2))
+      nil)))
 
 (defun find-xmas (array)
   (let* ((answer 0)
@@ -149,7 +158,8 @@ XMAS.S
          (height (array-dimension array 0)))
     (loop for row from 0 below height
           append (loop for col from 0 below width
-                       do (let* ((words (list (get-word-q array row col)
+                       do (if (equalp #\X (get-safe array row col))
+                           (let* ((words (list (get-word-q array row col)
                                               (get-word-w array row col)
                                               (get-word-e array row col)
                                               (get-word-d array row col)
@@ -161,5 +171,15 @@ XMAS.S
                                       (length
                                        (remove-if-not #'(lambda (x) (or (equalp x xmas)
                                                                         (equalp x (reverse xmas))))
-                                                      words))))))
-    (/ answer 2)))
+                                                      words)))))))
+    answer))
+
+(defun find-mas (array)
+  (let* ((answer 0)
+         (width (array-dimension array 1))
+         (height (array-dimension array 0)))
+      (loop for row from 0 below height
+          append (loop for col from 0 below width
+                       do (if (get-mas array row col)
+                              (incf answer 1))))
+    answer))
